@@ -6,19 +6,20 @@ import UserForm from '../../components/UserForm'
 class Users extends React.Component{
 state = {
     name: '',
-    names: [],
+    users: [],
     inputChange: e => { 
         this.setState({[e.target.name]: e.target.value})
     },
     NameSubmit: e => {
+        console.log('submitting names and things')
         e.preventDefault()
         axios.post('/user', {
             name: this.state.name,
         })
         .then(({data}) => {
-            let arr = JSON.parse(JSON.stringify(this.state.name))
+            let arr = JSON.parse(JSON.stringify(this.state.users))
             arr.push(data)
-            this.setState({names: arr, name: ''})
+            this.setState({users: arr, name: ''})
         })
     }
 }

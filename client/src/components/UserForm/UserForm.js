@@ -8,13 +8,13 @@ const UserForm = () => {
 return(
     <UserContext.Consumer>
         {
-        ({nameSubmit, inputChange, name,}) => (
+        ({NameSubmit, inputChange, name,}) => (
             <Form>
                 <FormGroup>
         <Label for="exampleText">Name</Label>
         <Input onChange={inputChange} value={name} type="textarea" name="name" id="exampleText" />
       </FormGroup>
-      <Button id="submit" onClick={nameSubmit}>Submit</Button>
+      <Button id="submit" onClick={NameSubmit}>Submit</Button>
             </Form>
         )
         }

@@ -1,8 +1,9 @@
 import { createContext} from 'react'
 
 const UserContext = createContext({
+user: '',
 name: '',
-names: [],
+users: [],
 inputChange: () => {},
 getNames: () => {},
 nameSubmit: () => {}
