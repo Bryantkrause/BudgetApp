@@ -6,6 +6,7 @@ import {
   } from 'react-router-dom'
 
   import Users from './pages/UserPage'
+  import Budgets from './pages/BudgetPage'
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Users/>
+          <Budgets/>
           </Route>
         </Switch>
       </Router>

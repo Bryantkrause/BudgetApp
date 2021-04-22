@@ -15,8 +15,10 @@ state = {
         e.preventDefault()
         axios.post('/user', {
             name: this.state.name,
+            
         })
         .then(({data}) => {
+            window.sessionStorage.setItem("userName", this.state.name)
             let arr = JSON.parse(JSON.stringify(this.state.users))
             arr.push(data)
             this.setState({users: arr, name: ''})

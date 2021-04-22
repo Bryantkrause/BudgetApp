@@ -20,7 +20,7 @@ module.exports = app => {
   app.post('/user', (req, res) => {
     console.log("user creation")
     User.create(req.body)
-    .then( r => console.log(res.json(r)))
+    .then( r => console.log(res.json(r.body)))
     .catch(e => console.error(e))
   })
 
