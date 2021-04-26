@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import BudgetContext from '../../utils/BudgetContext'
-import BudgetForm from '../../components/UserForm'
+import BudgetForm from '../../components/BudgetForm'
 
 class Budgets extends React.Component{
 state = {
@@ -9,11 +9,14 @@ state = {
     name: '',
     expense: '',
     expAmt: '',
-    budgetItems: [0,1,2,3,4,5,6,7,8,9],
+    budgetItems: [0,1,2,3,4,5,6,7,8,9,10],
     budget: '',
     budgets: [],
     inputChange: e => { 
         this.setState({[e.target.name]: e.target.value})
+    },
+    getBudgets: (item, index, arr) => {
+        arr[index] =console.log(item)
     },
     budgetSubmit: e => {
         console.log('submitting names and things')

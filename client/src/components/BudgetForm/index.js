@@ -1,1 +1,1 @@
-export {default} from './BudgetForm.js'
+export {default} from './BudgetForm'
