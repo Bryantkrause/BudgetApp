@@ -23,7 +23,8 @@ state = {
         e.preventDefault()
         axios.post('/budget', {
             name: this.state.name,
-            
+            expense: this.state.expense,
+            expAmt: this.state.expAmt,
         })
         .then(({data}) => {
             let arr = JSON.parse(JSON.stringify(this.state.users))
