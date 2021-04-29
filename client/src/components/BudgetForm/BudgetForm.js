@@ -12,9 +12,6 @@ return(
 ({budgetItems}) =>(
 
   budgetItems.map( ({BudgetSubmit, inputChange, name, expense, expAmt }, index, budget) => {
-    console.log("The current iteration is: " + index);
-    console.log("The current element is: " + budget);
-    console.log("\n");
     return (
       <Form>
 <FormGroup>

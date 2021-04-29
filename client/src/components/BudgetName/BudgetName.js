@@ -9,16 +9,16 @@ const BudgetName = () => {
         <BudgetContext.Consumer>
     
             {
-    ({BudgetSubmit, inputChange, name, expense, expAmt }) =>(
+    ({budgetSubmit, inputChange, name }) =>(
     
        
-          <Form>
+    <Form>
     <FormGroup>
     <Label for="exampleText">Budget Name</Label>
     <Input onChange={inputChange} value={name} type="textarea" name="name" id="exampleText" />
     </FormGroup>
-    <Button id="submit" onClick={BudgetSubmit}>Submit2</Button>
-      </Form>
+    <Button id="submit" onClick={budgetSubmit}>Submit2</Button>
+    </Form>
         
         
     )

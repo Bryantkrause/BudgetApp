@@ -10,6 +10,7 @@ const BudgetContext = createContext({
     budgets: [],
     budgetCreation: () => {},
     inputChange: () => {},
+    
     getBudgets: () => {},
     budgetSubmit: () => {}
     })

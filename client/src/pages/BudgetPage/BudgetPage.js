@@ -3,7 +3,7 @@ import axios from 'axios'
 import BudgetContext from '../../utils/BudgetContext'
 import BudgetForm from '../../components/BudgetForm'
 import BudgetName from '../../components/BudgetName'
-
+import BudgetAdj from '../../components/BudgetAdj'
 class Budgets extends React.Component{
 state = {
     user: '',
@@ -28,7 +28,7 @@ state = {
             expAmt: this.state.expAmt,
         })
         .then(({data}) => {
-            let arr = JSON.parse(JSON.stringify(this.state.users))
+            let arr = JSON.parse(JSON.stringify(this.state.budgets))
             arr.push(data)
             this.setState({budgets: arr, name: ''})
         })
@@ -43,9 +43,9 @@ componentDidMount() {
 render() {
     return(
         <BudgetContext.Provider value={this.state}>
-            <BudgetName/>
             <BudgetForm/>
-            
+            <BudgetName/>
+            <BudgetAdj/>
         </BudgetContext.Provider>
     )
 }
