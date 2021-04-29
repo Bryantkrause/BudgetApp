@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import BudgetContext from '../../utils/BudgetContext'
 import BudgetForm from '../../components/BudgetForm'
+import BudgetName from '../../components/BudgetName'
 
 class Budgets extends React.Component{
 state = {
@@ -42,7 +43,9 @@ componentDidMount() {
 render() {
     return(
         <BudgetContext.Provider value={this.state}>
+            <BudgetName/>
             <BudgetForm/>
+            
         </BudgetContext.Provider>
     )
 }
