@@ -1,5 +1,6 @@
 
 import React, { useContext } from 'react'
+import axios from 'axios'
 import BudgetContext from '../../utils/BudgetContext'
 import { DataGrid } from '@material-ui/data-grid';
 import {
@@ -8,29 +9,25 @@ import {
   randomUpdatedDate,
 } from '@material-ui/x-grid-data-generator';
 
-  const BudgetCon = (name, expense, expAmt) => ({
-    name: name,
-    expense: expense,
-    expAmt: expAmt
-})
 
+ 
 export default function EditRowModelControlGrid() {
+  
   const [editRowsModel, setEditRowsModel] = React.useState({});
-  const {budgetItems} = useContext(BudgetContext)
-
+  const {budgetItems, budgets} = useContext(BudgetContext)
 
   const handleEditRowModelChange = React.useCallback((params) => {
     setEditRowsModel(params.model);
   }, []);
-  const newB = BudgetCon('test1', 'food', 2)
+  
   return (
-    console.log(newB),
+    console.log(budgets),
       console.log(budgetItems),
     <div style={{ width: '85%' }}>
       <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={rows}
+          rows={budgets}
           columns={columns}
           editRowsModel={editRowsModel}
           onEditRowModelChange={handleEditRowModelChange}
@@ -41,6 +38,7 @@ export default function EditRowModelControlGrid() {
 }
 
 const columns = [
+  { field: 'id', headerName: '_id', width: 180, editable: false },
   { field: 'Expense', headerName: 'Expense', width: 180, editable: true },
   { field: 'ExpAmt', headerName: 'ExpAmt', width: 125, type: 'number', editable: true },
   {

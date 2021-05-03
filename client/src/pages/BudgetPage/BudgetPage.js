@@ -21,6 +21,10 @@ state = {
     getBudgets: (item, index, arr) => {
         arr[index] =console.log(item)
     },
+    BudgetCon: () => {
+        axios.get('/budget')
+    .then(({data}) => this.setState({ budgets: data}))
+    },
     budgetSubmit: e => {
         console.log('submitting names and things')
         e.preventDefault()
