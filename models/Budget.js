@@ -1,5 +1,3 @@
-const opts = { toJSON: { virtuals: true } };
-
 module.exports = (model, Schema) => {
     const Budget = new Schema({
       name: String,
@@ -7,8 +5,15 @@ module.exports = (model, Schema) => {
       expense: String,
       expAmt: Number,
       User: { type: Schema.Types.ObjectId, ref: 'User' },
-    }, { timestamps: { createdAt: 'birthday', updatedAt: 'pcChange' } },
-    opts)
+    }, { timestamps: { createdAt: 'birthday', updatedAt: 'pcChange' } })
   
+    Budget.set('toObject', {virtuals: true})
+    Budget.set('toJson', {virtuals: true})
+
+    Budget.virtual('id')
+    .get(function() {
+      
+    })
+
     return model('Budget', Budget)
   }
