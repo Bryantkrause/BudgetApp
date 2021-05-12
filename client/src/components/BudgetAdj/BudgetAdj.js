@@ -29,6 +29,7 @@ export default function EditRowModelControlGrid() {
         <DataGrid
           rows={budgets}
           columns={columns}
+          getRowID={(row) => budgets._id}
           editRowsModel={editRowsModel}
           onEditRowModelChange={handleEditRowModelChange}
         />
@@ -38,7 +39,7 @@ export default function EditRowModelControlGrid() {
 }
 
 const columns = [
-  { field: 'id', headerName: '_id', width: 180, editable: false },
+  { field: 'id', headerName: 'id', width: 180, editable: false },
   { field: 'Expense', headerName: 'Expense', width: 180, editable: true },
   { field: 'ExpAmt', headerName: 'ExpAmt', width: 125, type: 'number', editable: true },
   {
