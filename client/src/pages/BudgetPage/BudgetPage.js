@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import BudgetContext from '../../utils/BudgetContext'
 import BudgetForm from '../../components/BudgetForm'
-import BudgetName from '../../components/BudgetName'
 import BudgetAdj from '../../components/BudgetAdj'
 
 
@@ -50,7 +49,6 @@ render() {
     return(
         <BudgetContext.Provider value={this.state}>
             <BudgetForm/>
-            <BudgetName/>
             <BudgetAdj/>
         </BudgetContext.Provider>
     )
