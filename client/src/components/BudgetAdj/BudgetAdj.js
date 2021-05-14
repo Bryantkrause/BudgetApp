@@ -14,22 +14,27 @@ import {
 export default function EditRowModelControlGrid() {
   
   const [editRowsModel, setEditRowsModel] = React.useState({});
-  const {budgetItems, budgets} = useContext(BudgetContext)
+  const { budgets} = useContext(BudgetContext)
 
   const handleEditRowModelChange = React.useCallback((params) => {
     setEditRowsModel(params.model);
   }, []);
   
+  const rows = budgets.map((row) => {
+    const {_id, ...rest} = row
+    console.log(row)
+    return {id:_id, ...rest}
+    
+  })
+
   return (
     console.log(budgets),
-      console.log(budgetItems),
     <div style={{ width: '85%' }}>
       <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={budgets}
+          rows={rows}
           columns={columns}
-          getRowID={(row) => budgets._id}
           editRowsModel={editRowsModel}
           onEditRowModelChange={handleEditRowModelChange}
         />
@@ -40,8 +45,8 @@ export default function EditRowModelControlGrid() {
 
 const columns = [
   { field: 'id', headerName: 'id', width: 180, editable: false },
-  { field: 'Expense', headerName: 'Expense', width: 180, editable: true },
-  { field: 'ExpAmt', headerName: 'ExpAmt', width: 125, type: 'number', editable: true },
+  { field: 'expense', headerName: 'Expense', width: 180, editable: true },
+  { field: 'expAmt', headerName: 'ExpAmt', width: 125, type: 'number', editable: true },
   {
     field: 'dateCreated',
     headerName: 'Date Created',
@@ -58,40 +63,3 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    Expense: randomTraderName(),
-    ExpAmt: 25,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-  },
-  {
-    id: 2,
-    Expense: randomTraderName(),
-    ExpAmt: 36,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-  },
-  {
-    id: 3,
-    Expense: randomTraderName(),
-    ExpAmt: 19,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-  },
-  {
-    id: 4,
-    Expense: randomTraderName(),
-    ExpAmt: 28,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-  },
-  {
-    id: 5,
-    Expense: randomTraderName(),
-    ExpAmt: 23,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-  },
-];
