@@ -1,43 +1,36 @@
-import React from 'react'
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import BudgetContext from '../../utils/BudgetContext'
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
+import BudgetContext from "../../utils/BudgetContext";
 
-import { Col, Row, Form, FormGroup, Label, Input } from 'reactstrap';
+const useStyles = makeStyles((theme) => ({
+	root: {
+		"& > *": {
+			margin: theme.spacing(1),
+			width: "25ch",
+		},
+	},
+}));
 
-const BudgetForm = () => {
-return(
-    <BudgetContext.Consumer>
+export default function BudgetForm() {
+	const classes = useStyles();
 
-        {
-          ({budgetSubmit, inputChange, name, expense, expAmt}) => (
-            <Form>
-            <FormGroup>
-            <Label for="exampleText">Expense Name</Label>
-            <Input onChange={inputChange} value={expense} type="textarea" name="expense" id="exampleText" />
-            <Label for="exampleText">Expense Amount</Label>
-            <Input onChange={inputChange} value={expAmt} type="number" name="expAmt" id="exampleText" />
-            </FormGroup>
-            <FormGroup>
-    <Label for="exampleText">Budget Name</Label>
-    <Input onChange={inputChange} value={name} type="textarea" name="name" id="exampleText" />
-    </FormGroup>
-    <Button id="submit" onClick={budgetSubmit}>Submit2</Button>
-            </Form>
-
-          )
-        }
-
-
-    </BudgetContext.Consumer>
-)
+	return (
+		<form className={classes.root} noValidate autoComplete="off">
+			<TextField id="standard-basic" label="Budget Name" variant="outlined" />
+			<TextField id="filled-basic" label="Expense Name" variant="outlined" />
+			<TextField
+				id="outlined-basic"
+				label="Expense Amount"
+				variant="outlined"
+			/>
+		</form>
+	);
 }
-
-export default BudgetForm
