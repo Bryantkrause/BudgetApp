@@ -41,7 +41,7 @@ export default function EditRowModelControlGrid() {
 		(
 			<div style={{ width: "85%" }}>
 				<code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
-				<div style={{ height: 400, width: "100%" }}>
+				<div style={{ height: 750, width: "60%" }}>
 					<DataGrid
 						rows={rows}
 						columns={columns}
@@ -55,27 +55,29 @@ export default function EditRowModelControlGrid() {
 }
 
 const columns = [
-	{ field: "id", headerName: "id", width: 180, editable: false },
-	{ field: "expense", headerName: "Expense", width: 180, editable: true },
+	{
+		field: "id",
+		headerName: "id",
+		width: 180,
+		editable: false,
+	},
+	{
+		field: "name",
+		headerName: "Name",
+		width: 180,
+		editable: true,
+	},
+	{
+		field: "expense",
+		headerName: "Expense",
+		width: 180,
+		editable: true,
+	},
 	{
 		field: "expAmt",
 		headerName: "ExpAmt",
 		width: 125,
 		type: "number",
 		editable: true,
-	},
-	{
-		field: "dateCreated",
-		headerName: "Date Created",
-		type: "date",
-		width: 180,
-		editable: true,
-	},
-	{
-		field: "lastLogin",
-		headerName: "Last Login",
-		type: "dateTime",
-		width: 220,
-		editable: true,
-	},
-];
+	}
+	];

@@ -3,7 +3,8 @@ import axios from "axios";
 import BudgetContext from "../../utils/BudgetContext";
 import BudgetForm from "../../components/BudgetForm";
 import BudgetAdj from "../../components/BudgetAdj";
-import NavBar from '../../components/NavBar.js'
+import NavBar from "../../components/NavBar.js";
+import Chart from "../../components/Chart";
 
 class Budgets extends React.Component {
 	state = {
@@ -50,9 +51,10 @@ class Budgets extends React.Component {
 	render() {
 		return (
 			<BudgetContext.Provider value={this.state}>
-				<NavBar/>
+				<NavBar />
 				<BudgetForm />
 				<BudgetAdj />
+				<Chart />
 			</BudgetContext.Provider>
 		);
 	}

@@ -45,6 +45,14 @@ export default function NavBar() {
 					>
 						Budget
 					</Button>
+					<Button
+						variant="contained"
+						color="primary"
+						href="/Chart"
+						disableElevation
+					>
+						Chart
+					</Button>
 				</Toolbar>
 			</AppBar>
 		</div>

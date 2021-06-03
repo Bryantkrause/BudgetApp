@@ -23,14 +23,38 @@ export default function BudgetForm() {
 	const classes = useStyles();
 
 	return (
-		<form className={classes.root} noValidate autoComplete="off">
-			<TextField id="standard-basic" label="Budget Name" variant="outlined" />
-			<TextField id="filled-basic" label="Expense Name" variant="outlined" />
-			<TextField
-				id="outlined-basic"
-				label="Expense Amount"
-				variant="outlined"
-			/>
-		</form>
+		<BudgetContext.Consumer>
+			{({ inputChange, budgetSubmit, name, expense, expAmt }) => (
+				<form className={classes.root} noValidate autoComplete="off">
+					<TextField
+						id="standard-basic"
+						label="Budget Name"
+						variant="outlined"
+						onChange={inputChange}
+						name="name"
+						value={name}
+					/>
+					<TextField
+						id="filled-basic"
+						label="Expense Name"
+						variant="outlined"
+						onChange={inputChange}
+						name="expense"
+						value={expense}
+					/>
+					<TextField
+						id="outlined-basic"
+						label="Expense Amount"
+						variant="outlined"
+						onChange={inputChange}
+						name="expAmt"
+						value={expAmt}
+					/>
+					<Button id="submit" onClick={budgetSubmit}>
+						Submit2
+					</Button>
+				</form>
+			)}
+		</BudgetContext.Consumer>
 	);
 }
