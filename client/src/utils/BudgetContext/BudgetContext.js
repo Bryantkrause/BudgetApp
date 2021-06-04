@@ -1,19 +1,21 @@
-import { createContext} from 'react'
+import { createContext } from "react";
 
 const BudgetContext = createContext({
-    user: '',
-    name: '',
-    expense: '',
-    expAmt: '',
-    budget: '',
-    budgetItems: [],
-    budgets: [],
-    BudgetCon: () => {},
-    budgetCreation: () => {},
-    inputChange: () => {},    
-    getBudgets: () => {},
-    updateBudget: () => {},
-    budgetSubmit: () => {}
-    })
+	user: "",
+	name: "",
+	expense: "",
+	expAmt: "",
+	budget: "",
+	series: "",
+	budgetItems: [],
+	crosshairValues: [],
+	budgets: [],
+	BudgetCon: () => {},
+	budgetCreation: () => {},
+	inputChange: () => {},
+	getBudgets: () => {},
+	updateBudget: () => {},
+	budgetSubmit: () => {},
+});
 
-export default BudgetContext
+export default BudgetContext;

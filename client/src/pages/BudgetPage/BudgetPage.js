@@ -5,6 +5,10 @@ import BudgetForm from "../../components/BudgetForm";
 import BudgetAdj from "../../components/BudgetAdj";
 import NavBar from "../../components/NavBar.js";
 import Chart from "../../components/Chart";
+import BarChart from "../../components/BarChart";
+import ComplexChart from "../../components/ComplexChart";
+import LineChart from "../../components/LineChart";
+import { Line } from "@nivo/line";
 
 class Budgets extends React.Component {
 	state = {
@@ -55,6 +59,9 @@ class Budgets extends React.Component {
 				<BudgetForm />
 				<BudgetAdj />
 				<Chart />
+				<BarChart />
+				<ComplexChart />
+				<LineChart />
 			</BudgetContext.Provider>
 		);
 	}
