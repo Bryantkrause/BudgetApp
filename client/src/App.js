@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import "../node_modules/react-vis/dist/style.css";
 import Users from "./pages/UserPage";
 import Budgets from "./pages/BudgetPage";
-import ChartPage from "./pages/ChartPage";
+import Chart from "./pages/ChartPage";
 
 const App = () => {
 	return (
@@ -17,7 +17,7 @@ const App = () => {
 						<Budgets />
 					</Route>
 					<Route exact path="/Chart">
-						<ChartPage />
+						<Chart />
 					</Route>
 				</Switch>
 			</Router>

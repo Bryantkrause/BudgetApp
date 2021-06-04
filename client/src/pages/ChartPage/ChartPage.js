@@ -1,103 +1,192 @@
-import { ResponsiveBar } from "@nivo/bar";
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const ChartPage = ({ data /* see data tab */ }) => (
-	<ResponsiveBar
-		data={data}
-		keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
-		indexBy="country"
-		margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-		padding={0.3}
-		valueScale={{ type: "linear" }}
-		indexScale={{ type: "band", round: true }}
-		colors={{ scheme: "nivo" }}
-		defs={[
-			{
-				id: "dots",
-				type: "patternDots",
-				background: "inherit",
-				color: "#38bcb2",
-				size: 4,
-				padding: 1,
-				stagger: true,
-			},
-			{
-				id: "lines",
-				type: "patternLines",
-				background: "inherit",
-				color: "#eed312",
-				rotation: -45,
-				lineWidth: 6,
-				spacing: 10,
-			},
-		]}
-		fill={[
-			{
-				match: {
-					id: "fries",
-				},
-				id: "dots",
-			},
-			{
-				match: {
-					id: "sandwich",
-				},
-				id: "lines",
-			},
-		]}
-		borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-		axisTop={null}
-		axisRight={null}
-		axisBottom={{
-			tickSize: 5,
-			tickPadding: 5,
-			tickRotation: 0,
-			legend: "country",
-			legendPosition: "middle",
-			legendOffset: 32,
-		}}
-		axisLeft={{
-			tickSize: 5,
-			tickPadding: 5,
-			tickRotation: 0,
-			legend: "food",
-			legendPosition: "middle",
-			legendOffset: -40,
-		}}
-		labelSkipWidth={12}
-		labelSkipHeight={12}
-		labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-		legends={[
-			{
-				dataFrom: "keys",
-				anchor: "bottom-right",
-				direction: "column",
-				justify: false,
-				translateX: 120,
-				translateY: 0,
-				itemsSpacing: 2,
-				itemWidth: 100,
-				itemHeight: 20,
-				itemDirection: "left-to-right",
-				itemOpacity: 0.85,
-				symbolSize: 20,
-				effects: [
-					{
-						on: "hover",
-						style: {
-							itemOpacity: 1,
-						},
-					},
-				],
-			},
-		]}
-		animate={true}
-		motionStiffness={90}
-		motionDamping={15}
-	/>
-);
+import React, { Component } from "react";
+import "react-vis/dist/style.css";
+import { dsv } from "d3-fetch";
+import {
+	FlexibleWidthXYPlot,
+	VerticalBarSeries,
+	LineMarkSeries,
+	XAxis,
+	YAxis,
+	Hint,
+} from "react-vis";
 
-export default ChartPage;
+import dataUrl from "./name.csv";
+
+const getPopularityByYearForName = (data, name) => {
+	const nameData = data.filter((d) => d.firstName === name);
+	return Object.entries(
+		nameData.reduce((acc, row) => {
+			if (row.yearOfBirth in acc) {
+				acc[row.yearOfBirth] = acc[row.yearOfBirth] + row.count;
+			} else {
+				acc[row.yearOfBirth] = row.count;
+			}
+			return acc;
+		}, {})
+	).map(([k, v]) => ({ x: +k, y: v, name }));
+};
+
+class Chart extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			data: [],
+			ethnicityFilter: null,
+			ethnicities: [],
+			hoverData: null,
+		};
+		//get data
+		dsv(",", dataUrl, (d) => {
+			return {
+				yearOfBirth: +d["Year of Birth"],
+				gender: d["Gender"],
+				ethnicity: d["Ethnicity"],
+				firstName: d["Child's First Name"],
+				count: +d["Count"],
+				rank: +d["Rank"],
+			};
+		}).then((data) => {
+			const chartData = this.calculateChartData(data);
+			const ethnicities = this.getEthnicities(data);
+
+			this.setState({ ...chartData, data, ethnicities });
+		});
+	}
+	getEthnicities(data) {
+		return Object.keys(
+			data.reduce((acc, d) => {
+				acc[d.ethnicity] = true;
+				return acc;
+			}, {})
+		);
+	}
+	getTotalBabiesByYear(data) {
+		return Object.entries(
+			data.reduce((acc, row) => {
+				if (row.yearOfBirth in acc) {
+					acc[row.yearOfBirth] = acc[row.yearOfBirth] + row.count;
+				} else {
+					acc[row.yearOfBirth] = row.count;
+				}
+				return acc;
+			}, {})
+		).map(([k, v]) => ({ x: +k, y: v }));
+	}
+	getTopBabyNames(data, limit) {
+		const namesWithCounts = Object.entries(
+			data.reduce((acc, row) => {
+				if (row.firstName in acc) {
+					acc[row.firstName] = acc[row.firstName] + row.count;
+				} else {
+					acc[row.firstName] = row.count;
+				}
+				return acc;
+			}, {})
+		);
+		namesWithCounts.sort((a, b) => {
+			if (a[1] < b[1]) {
+				return 1;
+			}
+			if (a[1] > b[1]) {
+				return -1;
+			}
+			return 0;
+		});
+		return namesWithCounts.slice(0, limit).map(([k, v]) => k);
+	}
+	getYearlyDataForNames(data, names) {
+		return names.map((name) => ({
+			name,
+			data: getPopularityByYearForName(data, name),
+		}));
+	}
+	calculateChartData(data, ethnicityFilter) {
+		const totalBabiesByYear = this.getTotalBabiesByYear(data);
+		const top10BabyNames = this.getTopBabyNames(data, 10);
+		const namesWithData = this.getYearlyDataForNames(data, top10BabyNames);
+		return {
+			ethnicityFilter,
+			totalBabiesByYear,
+			namesWithData,
+		};
+	}
+	filterData(filter) {
+		const chartData = this.calculateChartData(
+			this.state.data.filter((d) => d.ethnicity === filter)
+		);
+		this.setState({ ...chartData, ethnicityFilter: filter });
+	}
+	render() {
+		const {
+			hoverData,
+			namesWithData,
+			totalBabiesByYear,
+			ethnicities,
+			ethnicityFilter,
+		} = this.state;
+
+		if (!namesWithData) {
+			return <div className="App">Loading...</div>;
+		}
+
+		return (
+			<div className="App">
+				<div className="row">
+					<div className="chart double">
+						<FlexibleWidthXYPlot
+							animate
+							height={300}
+							margin={{
+								left: 70,
+							}}
+							xType="ordinal"
+							onMouseLeave={() => this.setState({ hoverData: null })}
+						>
+							{namesWithData.map(({ name, data }) => (
+								<LineMarkSeries
+									animation
+									onValueMouseOver={(d) => this.setState({ hoverData: d })}
+									key={name}
+									data={data}
+								/>
+							))}
+							{!!hoverData && <Hint value={hoverData} />}
+							<XAxis />
+							<YAxis />
+						</FlexibleWidthXYPlot>
+					</div>
+					<div className="chart">
+						<FlexibleWidthXYPlot
+							height={300}
+							margin={{
+								left: 70,
+							}}
+							xType="ordinal"
+						>
+							<VerticalBarSeries animation data={totalBabiesByYear} />
+							<XAxis />
+							<YAxis />
+						</FlexibleWidthXYPlot>
+					</div>
+				</div>
+				<div className="row">
+					<ul className="ethnicities">
+						{ethnicities.map((e) => {
+							return (
+								<li
+									className={e === ethnicityFilter ? "selected" : ""}
+									onClick={() => this.filterData(e)}
+								>
+									{e}
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			</div>
+		);
+	}
+}
+
+export default Chart;
