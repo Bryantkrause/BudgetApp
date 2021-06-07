@@ -26,12 +26,12 @@ const blueData = [
 	{ x: "C", y: 11 },
 ];
 
-	/**
-	 * Event handler for onNearestX.
-	 * @param {Object} value Selected value.
-	 * @param {number} index Index of the series.
-	 * @private
-	 */
+/**
+ * Event handler for onNearestX.
+ * @param {Object} value Selected value.
+ * @param {number} index Index of the series.
+ * @private
+ */
 
 const labelData = greenData.map((d, idx) => ({
 	x: d.x,
@@ -42,10 +42,16 @@ export default function BarChart() {
 	const { budgets, series } = useContext(BudgetContext);
 	console.log(budgets);
 
-	const rows = budgets.map((row) => {
-		const { expAmt, ...rest } = row;
-		console.log(row);
+	const columns = budgets.map((column) => {
+		const { expAmt, ...rest } = column;
+		console.log(column);
 		return { y: expAmt, x: budgets.indexOf, ...rest };
+	});
+
+	const data2 = budgets.map((column) => {
+		const { timestamps, ...rest } = column;
+		console.log(column);
+		return { y: timestamps, x: budgets.indexOf, ...rest };
 	});
 
 	return (
@@ -57,7 +63,7 @@ export default function BarChart() {
 				<YAxis />
 				<VerticalBarSeries
 					className="vertical-bar-series-example"
-					data={rows}
+					data={columns}
 				/>
 				<VerticalBarSeries data={blueData} />
 				<LabelSeries data={labelData} getLabel={(d) => d.x} />
