@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import {
 	XYPlot,
@@ -39,7 +39,7 @@ const labelData = greenData.map((d, idx) => ({
 }));
 
 export default function BarChart() {
-	const { budgets, series, crosshairValues } = useContext(BudgetContext);
+	const { budgets, series } = useContext(BudgetContext);
 	console.log(budgets);
 
 	const columns = budgets.map((column) => {
