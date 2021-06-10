@@ -98,6 +98,7 @@ export default class ComplexChart extends React.Component {
 	 * @private
 	 */
 	_formatCrosshairTitle(values) {
+		console.log(values);
 		return {
 			title: "X",
 			value: values[0].left,
@@ -111,6 +112,7 @@ export default class ComplexChart extends React.Component {
 	 * @private
 	 */
 	_formatCrosshairItems(values) {
+		console.log(values);
 		const { series } = this.state;
 		return values.map((v, i) => {
 			return {

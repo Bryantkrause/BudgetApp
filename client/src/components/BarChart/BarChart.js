@@ -39,8 +39,9 @@ const labelData = greenData.map((d, idx) => ({
 }));
 
 export default function BarChart() {
-	const { budgets, series, crosshairValues } = useContext(BudgetContext);
+	const { budgets, _nearestXhandler } = useContext(BudgetContext);
 	console.log(budgets);
+	
 
 	const columns = budgets.map((column) => {
 		const { expAmt, ...rest } = column;
@@ -53,6 +54,13 @@ export default function BarChart() {
 		console.log(column);
 		return { y: timestamps, x: budgets.indexOf, ...rest };
 	});
+
+	_nearestXhandler(value, { index }); {
+				const { series } = this.state;
+		this.setState({
+			crosshairValues: series.map((s) => s.data[index]),
+		});
+	}
 
 	return (
 		<div>
@@ -67,6 +75,10 @@ export default function BarChart() {
 				/>
 				<VerticalBarSeries data={blueData} />
 				<LabelSeries data={labelData} getLabel={(d) => d.x} />
+				<Crosshair
+				
+				
+				/>
 			</XYPlot>
 		</div>
 	);

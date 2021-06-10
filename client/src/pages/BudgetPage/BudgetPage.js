@@ -16,6 +16,8 @@ class Budgets extends React.Component {
 		name: "",
 		expense: "",
 		expAmt: "",
+		crosshairValues: [],
+		series: [],
 		budgetItems: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		budget: "",
 		budgets: [],
@@ -27,6 +29,32 @@ class Budgets extends React.Component {
 		},
 		updateBudget: (e) => {
 			console.log(e.target);
+		},
+		_mouseLeaveHandler() {
+			this.setState({ crosshairValues: [] });
+		},
+		_nearestXHandler(value, { index }) {
+			const { series } = this.state;
+			this.setState({
+				crosshairValues: series.map((s) => s.data[index]),
+			});
+		},
+		_formatCrosshairTitle(values) {
+			console.log(values);
+			return {
+				title: "X",
+				value: values[0].left,
+			};
+		},
+		_formatCrosshairItems(values) {
+			console.log(values);
+			const { series } = this.state;
+			return values.map((v, i) => {
+				return {
+					title: series[i].title,
+					value: v.top,
+				};
+			});
 		},
 		BudgetCon: () => {
 			axios.get("/budget").then(({ data }) => this.setState({ budgets: data }));
