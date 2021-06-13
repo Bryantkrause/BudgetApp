@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import BudgetContext from "../../utils/BudgetContext";
 import BudgetForm from "../../components/BudgetForm";
 import BudgetAdj from "../../components/BudgetAdj";
@@ -24,8 +23,11 @@ const BudgetPage = () => {
 		budgetItems: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		budget: "",
 		budgets: [],
-		crosshairValues: [],
 	});
+
+	budgetState.updateBudget = (event) => {
+		setBudgetState({ ...budgetState, [event.target.name]: event.target.value });
+	}
 
 	budgetState.budgetSubmit = (event) => {
 		event.preventDefault();
@@ -37,6 +39,14 @@ const BudgetPage = () => {
 			let budgets = JSON.parse(JSON.stringify(budgetState.budgets));
 			budgets.push(data);
 			setBudgetState({ ...budgetState, budgets });
+		});
+	};
+
+	budgetState.deleteBudget = (id) => {
+		deleteBudget(id).then(() => {
+			let budgets = JSON.parse(JSON.stringify(budgetState.budgets));
+			let budgetUpdated = budgets.filter((budget) => budget._id !== id);
+			setBudgetState({ ...budgetState, budgets: budgetUpdated });
 		});
 	};
 
