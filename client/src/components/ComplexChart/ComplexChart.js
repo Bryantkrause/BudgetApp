@@ -60,7 +60,7 @@ export default class ComplexChart extends React.Component {
 		this._legendClickHandler = this._legendClickHandler.bind(this);
 		this._formatCrosshairItems = this._formatCrosshairItems.bind(this);
 		this._formatCrosshairTitle = this._formatCrosshairTitle.bind(this);
-		this._columns = this._columns.bind(this);
+		
 	}
 
 	_updateButtonClicked() {
@@ -127,11 +127,11 @@ export default class ComplexChart extends React.Component {
 		});
 	}
 
-	_columns(column) {
-		const { expAmt, ...rest } = column;
-
-		return { y: expAmt, x: this.state.budgets.indexOf, ...rest };
-	}
+// 	_columns(column) {
+// 		const { expAmt, ...rest } = column;
+// +
+// 		return { y: expAmt, x: this.state.budgets.indexOf, ...rest };
+// 	}
 	/**
 	 * Click handler for the legend.
 	 * @param {Object} item Clicked item of the legend.
