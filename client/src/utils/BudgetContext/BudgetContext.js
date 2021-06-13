@@ -16,6 +16,7 @@ const BudgetContext = createContext({
 	_updateButtonClicked: () => {},
 	_formatCrosshairItems: () => {},
 	formatCrosshairTitle: () => {},
+	_legendClickHandler: () => {},
 	setSeries: () => {},
 	budgetCreation: () => {},
 	inputChange: () => {},

@@ -39,9 +39,16 @@ const labelData = greenData.map((d, idx) => ({
 }));
 
 export default function BarChart() {
-	const { budgets, _nearestXhandler } = useContext(BudgetContext);
+	const {
+		budgets,
+		_nearestXhandler,
+		_legendClickHandler,
+		_formatCrosshairItems,
+		_formatCrosshairTitle,
+		crosshairValues,
+		series,
+	} = useContext(BudgetContext);
 	console.log(budgets);
-	
 
 	const columns = budgets.map((column) => {
 		const { expAmt, ...rest } = column;
@@ -55,8 +62,9 @@ export default function BarChart() {
 		return { y: timestamps, x: budgets.indexOf, ...rest };
 	});
 
-	_nearestXhandler(value, { index }); {
-				const { series } = this.state;
+	_nearestXhandler(value, { index });
+	{
+		const { series } = this.state;
 		this.setState({
 			crosshairValues: series.map((s) => s.data[index]),
 		});
@@ -64,6 +72,13 @@ export default function BarChart() {
 
 	return (
 		<div>
+			<div className="legend">
+				<DiscreteColorLegend
+					onItemClick={_legendClickHandler()}
+					width={180}
+					items={series}
+				/>
+			</div>
 			<XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
 				<VerticalGridLines />
 				<HorizontalGridLines />
@@ -76,8 +91,9 @@ export default function BarChart() {
 				<VerticalBarSeries data={blueData} />
 				<LabelSeries data={labelData} getLabel={(d) => d.x} />
 				<Crosshair
-				
-				
+					itemsFormat={_formatCrosshairItems()}
+					titleFormat={_formatCrosshairTitle()}
+					values={crosshairValues}
 				/>
 			</XYPlot>
 		</div>

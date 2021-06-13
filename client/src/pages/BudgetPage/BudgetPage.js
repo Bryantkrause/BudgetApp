@@ -5,7 +5,7 @@ import BudgetForm from "../../components/BudgetForm";
 import BudgetAdj from "../../components/BudgetAdj";
 import NavBar from "../../components/NavBar.js";
 import Chart from "../../components/Chart";
-import BarChart from "../../components/BarChart";
+
 import ComplexChart from "../../components/ComplexChart";
 import LineChart from "../../components/LineChart";
 import { Line } from "@nivo/line";
@@ -29,6 +29,11 @@ class Budgets extends React.Component {
 		},
 		updateBudget: (e) => {
 			console.log(e.target);
+		},
+		_legendClickHandler(item, i) {
+			const { series } = this.state;
+			series[i].disabled = !series[i].disabled;
+			this.setState({ series });
 		},
 		_mouseLeaveHandler() {
 			this.setState({ crosshairValues: [] });
@@ -87,7 +92,7 @@ class Budgets extends React.Component {
 				<BudgetForm />
 				<BudgetAdj />
 				<Chart />
-				<BarChart />
+				{/* <BarChart /> */}
 				<ComplexChart />
 				<LineChart />
 			</BudgetContext.Provider>

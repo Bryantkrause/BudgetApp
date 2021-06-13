@@ -71,3 +71,10 @@ export default function BarChart() {
 		</div>
 	);
 }
+
+
+	const columns = this.state.budgets.map((column) => {
+		const { expAmt, ...rest } = column;
+		console.log(column);
+		return { y: expAmt, x: this.state.budgets.indexOf, ...rest };
+	});
