@@ -24,13 +24,13 @@ export default function BudgetForm() {
 
 	return (
 		<BudgetContext.Consumer>
-			{({ inputChange, budgetSubmit, name, expense, expAmt }) => (
+			{({ updateBudget, budgetSubmit, name, expense, expAmt }) => (
 				<form className={classes.root} noValidate autoComplete="off">
 					<TextField
 						id="standard-basic"
 						label="Budget Name"
 						variant="outlined"
-						onChange={inputChange}
+						onChange={updateBudget}
 						name="name"
 						value={name}
 					/>
@@ -38,7 +38,7 @@ export default function BudgetForm() {
 						id="filled-basic"
 						label="Expense Name"
 						variant="outlined"
-						onChange={inputChange}
+						onChange={updateBudget}
 						name="expense"
 						value={expense}
 					/>
@@ -46,7 +46,7 @@ export default function BudgetForm() {
 						id="outlined-basic"
 						label="Expense Amount"
 						variant="outlined"
-						onChange={inputChange}
+						onChange={updateBudget}
 						name="expAmt"
 						value={expAmt}
 					/>

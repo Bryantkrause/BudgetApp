@@ -24,10 +24,10 @@ const BudgetPage = () => {
 		budget: "",
 		budgets: [],
 	});
-
+	
 	budgetState.updateBudget = (event) => {
 		setBudgetState({ ...budgetState, [event.target.name]: event.target.value });
-	}
+	};
 
 	budgetState.budgetSubmit = (event) => {
 		event.preventDefault();
@@ -59,7 +59,10 @@ const BudgetPage = () => {
 	}, []);
 	return (
 		<BudgetContext.Provider value={budgetState}>
+			<NavBar />
 			<ComplexChart />
+			<BudgetForm />
+			<BudgetAdj />
 		</BudgetContext.Provider>
 	);
 };
