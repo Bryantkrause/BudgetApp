@@ -20,14 +20,8 @@ module.exports = app => {
    app.post('/budget', (req, res) => {
     console.log("budgets creation")
     Budget.create(req.body)
-      .then(({ _id }) => {
-        User.updateOne({_id: req.body.user},
-           {$push: {Budget: _id}
-        })
-        .then( r => console.log(res.json(r.body)))
-          .catch(e => console.error(e))
-      })
-      .catch(e => console.error(e))
+    .then( r => console.log(res.json(r.body)))
+    .catch(e => console.error(e))
   })
 
 
