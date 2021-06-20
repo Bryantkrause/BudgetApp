@@ -8,6 +8,7 @@ const BudgetContext = createContext({
 	budget: "",
 	series: "",
 	budgetItems: [],
+	actual: [],
 	crosshairValues: [],
 	budgets: [],
 	BudgetCon: () => {},

@@ -20,11 +20,33 @@ const BudgetPage = () => {
 		expAmt: "",
 		crosshairValues: [],
 		series: [],
+		actual: [
+			{
+				name: "life",
+				expense: "rent",
+				expAmt: "1350",
+			},
+			{
+				name: "life",
+				expense: "food",
+				expAmt: "1500",
+			},
+			{
+				name: "life",
+				expense: "phone",
+				expAmt: "170",
+			},
+			{
+				name: "life",
+				expense: "electricity",
+				expAmt: "75",
+			},
+		],
 		budgetItems: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		budget: "",
 		budgets: [],
 	});
-	
+
 	budgetState.updateBudget = (event) => {
 		setBudgetState({ ...budgetState, [event.target.name]: event.target.value });
 	};
