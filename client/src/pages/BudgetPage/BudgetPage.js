@@ -4,7 +4,7 @@ import BudgetForm from "../../components/BudgetForm";
 import BudgetAdj from "../../components/BudgetAdj";
 import NavBar from "../../components/NavBar.js";
 import Chart from "../../components/Chart";
-
+import NewTest from "../../components/NewTest";
 import ComplexChart from "../../components/ComplexChart";
 import LineChart from "../../components/LineChart";
 
@@ -85,6 +85,7 @@ const BudgetPage = () => {
 			<ComplexChart />
 			<BudgetForm />
 			<BudgetAdj />
+			<NewTest />
 		</BudgetContext.Provider>
 	);
 };
