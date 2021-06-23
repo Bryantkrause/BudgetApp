@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import BudgetContext from "../../utils/BudgetContext";
 import {
 	XAxis,
 	YAxis,
@@ -10,7 +10,7 @@ import {
 	DiscreteColorLegend,
 	Crosshair,
 } from "react-vis";
-import BudgetContext from "../../utils/BudgetContext";
+
 /**
  * Get the array of x and y pairs.
  * The function tries to avoid too large changes of the chart.
@@ -40,7 +40,6 @@ export default class ComplexChart extends React.Component {
 		const totalValues = Math.random() * 50;
 		this.state = {
 			crosshairValues: [],
-			budgets: [],
 			series: [
 				{
 					title: "Apples",
@@ -60,7 +59,6 @@ export default class ComplexChart extends React.Component {
 		this._legendClickHandler = this._legendClickHandler.bind(this);
 		this._formatCrosshairItems = this._formatCrosshairItems.bind(this);
 		this._formatCrosshairTitle = this._formatCrosshairTitle.bind(this);
-		
 	}
 
 	_updateButtonClicked() {
@@ -71,9 +69,6 @@ export default class ComplexChart extends React.Component {
 		});
 		this.setState({ series });
 	}
-	componentDidMount() {
-		axios.get("/budget").then(({ data }) => this.setState({ budgets: data }));
-	}
 
 	/**
 	 * Event handler for onNearestX.
@@ -83,8 +78,6 @@ export default class ComplexChart extends React.Component {
 	 */
 	_nearestXHandler(value, { index }) {
 		const { series } = this.state;
-		const { budgets } = this.state;
-		console.log(budgets);
 		this.setState({
 			crosshairValues: series.map((s) => s.data[index]),
 		});
@@ -105,6 +98,7 @@ export default class ComplexChart extends React.Component {
 	 * @private
 	 */
 	_formatCrosshairTitle(values) {
+		console.log(values);
 		return {
 			title: "X",
 			value: values[0].left,
@@ -118,6 +112,7 @@ export default class ComplexChart extends React.Component {
 	 * @private
 	 */
 	_formatCrosshairItems(values) {
+		console.log(values);
 		const { series } = this.state;
 		return values.map((v, i) => {
 			return {
@@ -127,11 +122,6 @@ export default class ComplexChart extends React.Component {
 		});
 	}
 
-// 	_columns(column) {
-// 		const { expAmt, ...rest } = column;
-// +
-// 		return { y: expAmt, x: this.state.budgets.indexOf, ...rest };
-// 	}
 	/**
 	 * Click handler for the legend.
 	 * @param {Object} item Clicked item of the legend.
@@ -145,58 +135,64 @@ export default class ComplexChart extends React.Component {
 	}
 
 	render() {
-		const { series, crosshairValues, budgets } = this.state;
+		const { series, crosshairValues } = this.state;
 		return (
-			console.log(budgets),
-			(
-				<div className="example-with-click-me">
-					<div className="legend">
-						<DiscreteColorLegend
-							onItemClick={this._legendClickHandler}
-							width={180}
-							items={series}
-						/>
-					</div>
-
-					<div className="chart">
-						<FlexibleWidthXYPlot
-							animation
-							getX={(d) => d.left}
-							getY={(d) => d.top}
-							onMouseLeave={this._mouseLeaveHandler}
-							xDomain={[-0.5, budgets.length - 1]}
-							height={300}
-						>
-							<HorizontalGridLines />
-							<YAxis
-								className="cool-custom-name"
-								tickSizeInner={0}
-								tickSizeOuter={8}
-							/>
-							<XAxis
-								className="even-cooler-custom-name"
-								tickSizeInner={0}
-								tickSizeOuter={8}
-							/>
-							<VerticalRectSeries
-								data={series[1].data}
-								curve="curveMonotoneX"
-								{...(series[1].disabled ? { opacity: 0.2 } : null)}
-							/>
-							<LineSeries data={budgets.expAmt} curve="curveMonotoneX" />
-							<Crosshair
-								itemsFormat={this._formatCrosshairItems}
-								titleFormat={this._formatCrosshairTitle}
-								values={crosshairValues}
-							/>
-						</FlexibleWidthXYPlot>
-					</div>
-
-					<button className="click-me" onClick={this._updateButtonClicked}>
-						Click to update
-					</button>
+			<div className="example-with-click-me">
+				<div className="legend">
+					<DiscreteColorLegend
+						onItemClick={this._legendClickHandler}
+						width={180}
+						items={series}
+					/>
 				</div>
-			)
+
+				<div className="chart">
+					<FlexibleWidthXYPlot
+						animation
+						getX={(d) => d.left}
+						getY={(d) => d.top}
+						onMouseLeave={this._mouseLeaveHandler}
+						xDomain={[-0.5, series[0].data.length - 1]}
+						height={300}
+					>
+						<HorizontalGridLines />
+						<YAxis
+							className="cool-custom-name"
+							tickSizeInner={0}
+							tickSizeOuter={8}
+						/>
+						<XAxis
+							className="even-cooler-custom-name"
+							tickSizeInner={0}
+							tickSizeOuter={8}
+						/>
+						<VerticalRectSeries
+							data={series[0].data.map(({ left, top }) => ({
+								x0: left - 0.5,
+								left: left + 0.5,
+								top,
+							}))}
+							stroke="white"
+							onNearestX={this._nearestXHandler}
+							{...(series[0].disabled ? { opacity: 0.2 } : null)}
+						/>
+						<LineSeries
+							data={series[1].data}
+							curve="curveMonotoneX"
+							{...(series[1].disabled ? { opacity: 0.2 } : null)}
+						/>
+						<Crosshair
+							itemsFormat={this._formatCrosshairItems}
+							titleFormat={this._formatCrosshairTitle}
+							values={crosshairValues}
+						/>
+					</FlexibleWidthXYPlot>
+				</div>
+
+				<button className="click-me" onClick={this._updateButtonClicked}>
+					Click to update
+				</button>
+			</div>
 		);
 	}
 }

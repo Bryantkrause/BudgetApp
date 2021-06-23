@@ -24,6 +24,7 @@ const BudgetContext = createContext({
 	getBudgets: () => {},
 	updateBudget: () => {},
 	budgetSubmit: () => {},
+	updateSeries: () => {},
 });
 
 export default BudgetContext;

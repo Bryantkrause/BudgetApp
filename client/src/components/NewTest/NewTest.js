@@ -16,7 +16,7 @@ import {
 import BudgetContext from "../../utils/BudgetContext";
 
 const NewTest = () => {
-	const { budgets, actual } = useContext(BudgetContext);
+	const { budgets, actual, series, updateSeries } = useContext(BudgetContext);
 	console.log(budgets, actual);
 
 	const budgetable = budgets.map((column) => {
@@ -31,13 +31,17 @@ const NewTest = () => {
 		return { y: expAmt, x: expense, ...rest };
 	});
 	console.log(actuals);
+
+	
 	return (
 		<div>
-			<XYPlot xType="ordinal" width={1000} height={1000} xDistance={100}>
+			<XYPlot xType="ordinal" width={1000} height={500} xDistance={100}>
+				<HorizontalGridLines />
 				<XAxis />
 				<YAxis />
+
 				<VerticalRectSeries data={actuals} curve="curveMonotoneX" />
-				<LineSeries data={budgetable} />
+				<LineSeries data={budgetable} curve="curveMonotoneX" />
 			</XYPlot>
 		</div>
 	);

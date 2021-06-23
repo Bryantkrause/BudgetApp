@@ -63,6 +63,7 @@ const BudgetPage = () => {
 			setBudgetState({ ...budgetState, budgets });
 		});
 	};
+	
 
 	budgetState.deleteBudget = (id) => {
 		deleteBudget(id).then(() => {
