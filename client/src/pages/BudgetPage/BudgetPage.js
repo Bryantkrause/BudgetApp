@@ -47,6 +47,21 @@ const BudgetPage = () => {
 		budgets: [],
 	});
 
+	budgetState.budgetable = budgetState.budgets.map((column) => {
+		const { expAmt, expense, ...rest } = column;
+		return { y: expAmt, x: expense, ...rest };
+	});
+	budgetState.actuals = budgetState.actual.map((column) => {
+		const { expAmt, expense, ...rest } = column;
+		return { y: expAmt, x: expense, ...rest };
+	});
+	// budgetState.setSeries = (x) => {
+	// 	let seriable = budgetState.series;
+	// 	seriable.push(budgetState.actuals);
+	// 	seriable.push(budgetState.budgetable);
+	// 	setBudgetState({ ...budgetState, seriable });
+	// };
+
 	budgetState.updateBudget = (event) => {
 		setBudgetState({ ...budgetState, [event.target.name]: event.target.value });
 	};
@@ -59,11 +74,12 @@ const BudgetPage = () => {
 			expAmt: budgetState.expAmt,
 		}).then(({ data }) => {
 			let budgets = JSON.parse(JSON.stringify(budgetState.budgets));
+			let actuals = JSON.parse(JSON.stringify(budgetState.budgets));
 			budgets.push(data);
-			setBudgetState({ ...budgetState, budgets });
+			actuals.push(data);
+			setBudgetState({ ...budgetState, budgets, actuals });
 		});
 	};
-	
 
 	budgetState.deleteBudget = (id) => {
 		deleteBudget(id).then(() => {
