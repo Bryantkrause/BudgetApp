@@ -20,6 +20,7 @@ const BudgetPage = () => {
 		expAmt: "",
 		crosshairValues: [],
 		series: [],
+		actuals: [],
 		actual: [
 			{
 				name: "life",
@@ -80,6 +81,15 @@ const BudgetPage = () => {
 			setBudgetState({ ...budgetState, budgets, actuals });
 		});
 	};
+	budgetState.setSeries = () => {
+		let x = budgetState.budgetable;
+		budgetState.series.push(x);
+
+		let y = budgetState.actuals;
+		budgetState.series.push(y);
+
+		console.log(budgetState.series);
+	};
 
 	budgetState.deleteBudget = (id) => {
 		deleteBudget(id).then(() => {
@@ -95,6 +105,10 @@ const BudgetPage = () => {
 				setBudgetState({ ...budgetState, budgets });
 			})
 			.catch((e) => console.error(e));
+	}, []);
+
+	useEffect(() => {
+		budgetState.setSeries();
 	}, []);
 	return (
 		<BudgetContext.Provider value={budgetState}>

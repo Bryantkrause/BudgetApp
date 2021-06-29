@@ -27,7 +27,7 @@ const NewTest = () => {
 		setSeries,
 	} = useContext(BudgetContext);
 	console.log(budgetable, actuals);
-
+	console.log(series);
 	// const budgetable = budgets.map((column) => {
 	// 	const { expAmt, expense, ...rest } = column;
 	// 	console.log(column);
@@ -39,7 +39,6 @@ const NewTest = () => {
 	// 	console.log(column);
 	// 	return { y: expAmt, x: expense, ...rest };
 	// });
-	
 
 	// const seriable = series.map((x) => {
 	// 	const { budgets, actual, ...rest } = x;
@@ -55,12 +54,11 @@ const NewTest = () => {
 				<HorizontalGridLines />
 				<XAxis />
 				<YAxis />
-				<Crosshair
-				data={actuals}
-				/>
+				<Crosshair data={actuals} />
 				<VerticalRectSeries data={actuals} curve="curveMonotoneX" />
 				<LineSeries data={budgetable} curve="curveMonotoneX" />
 			</XYPlot>
+			<button onClick={setSeries}> click me</button>
 		</div>
 	);
 };
